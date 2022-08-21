@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rare_crew/core/models/job_dto.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rare_crew/core/repositories/auth_repository.dart';
 
 final jobRepositoryProvider = Provider<JobRepository>((ref) {
-  return JobRepositoryImpl();
+  return JobRepositoryImpl(ref.read);
 });
 
 const _jobsKey = 'jobs';
@@ -16,9 +16,13 @@ abstract class JobRepository {
 }
 
 class JobRepositoryImpl implements JobRepository {
+  JobRepositoryImpl(this._read);
+
+  final Reader _read;
+
   @override
   Future<List<Job>> getJobs() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = _read(sharedPreferencesProvider);
 
     final List<String> jobStringList = prefs.getStringList(_jobsKey) ?? [];
 
@@ -32,7 +36,7 @@ class JobRepositoryImpl implements JobRepository {
 
   @override
   Future<void> saveJobs(List<Job> jobs) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = _read(sharedPreferencesProvider);
 
     final List<String> jobStringList = jobs.map((job) {
       final Map<String, dynamic> jobMap = job.toJson();

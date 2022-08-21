@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rare_crew/ui/screens/dashboard/dashboard_container.dart';
 import 'package:rare_crew/ui/widgets/widgets.dart';
 import 'package:rare_crew/utils/utils.dart';
+import 'package:rare_crew/viewmodels/signin_viewmodel.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignInScreen extends HookConsumerWidget {
+  const SignInScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -51,6 +53,7 @@ class LoginScreen extends StatelessWidget {
               AtsTextButton(
                 title: 'Sign in',
                 onPressed: () async {
+                  ref.watch(signInViewModelProvider.notifier).signIn();
                   pushTo(context, const DashboardContainer());
                 },
                 buttonColor: rareCrewColors.yellow,
