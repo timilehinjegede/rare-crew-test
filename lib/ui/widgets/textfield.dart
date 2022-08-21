@@ -17,6 +17,7 @@ class AtsTextField extends StatefulWidget {
     this.onTap,
     this.readOnly = false,
     this.inputFormatters,
+    this.initialValue,
   }) : super(key: key);
 
   final String hintText;
@@ -31,6 +32,7 @@ class AtsTextField extends StatefulWidget {
   final VoidCallback? onTap;
   final bool readOnly;
   final List<TextInputFormatter>? inputFormatters;
+  final String? initialValue;
 
   @override
   State<AtsTextField> createState() => _AtsTextFieldState();
@@ -53,7 +55,8 @@ class _AtsTextFieldState extends State<AtsTextField> {
           color: rareCrewColors.darkGrey.withOpacity(.3),
         ),
       ),
-      child: TextField(
+      child: TextFormField(
+        initialValue: widget.initialValue,
         controller: widget.controller,
         onChanged: widget.onChanged,
         keyboardType: widget.keyboardType,

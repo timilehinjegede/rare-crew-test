@@ -50,8 +50,6 @@ class LoginScreen extends StatelessWidget {
               const YBox(30),
               AtsTextButton(
                 title: 'Sign in',
-                // isLoading: store.state.isLoading,
-                // disabled: !_emailAndPasswordValidation(),
                 onPressed: () async {
                   pushTo(context, const DashboardContainer());
                 },

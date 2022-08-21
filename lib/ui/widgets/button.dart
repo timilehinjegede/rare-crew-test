@@ -28,9 +28,9 @@ class AtsTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: onPressed,
+      onPressed: disabled ? null : onPressed,
       style: TextButton.styleFrom(
-        primary: textColor,
+        foregroundColor: textColor,
         backgroundColor: disabled ? rareCrewColors.grey : buttonColor,
         minimumSize: size,
         shape: RoundedRectangleBorder(
@@ -81,7 +81,7 @@ class AtsOutlinedButton extends StatelessWidget {
     return OutlinedButton(
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
-        primary: rareCrewColors.purple,
+        foregroundColor: rareCrewColors.purple,
         backgroundColor: rareCrewColors.background,
         side: BorderSide(
           color: rareCrewColors.purple,

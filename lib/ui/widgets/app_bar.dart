@@ -85,16 +85,19 @@ class AtsCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.leading,
     this.actions,
     this.onLeadingTapped,
+    this.background,
   }) : super(key: key);
 
   final String? title;
   final Widget? leading;
   final List<Widget>? actions;
   final VoidCallback? onLeadingTapped;
+  final Color? background;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: background,
       leading: leading ??
           IconButton(
             onPressed: onLeadingTapped,

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:rare_crew/core/models/job_dto.dart';
 import 'package:rare_crew/utils/utils.dart';
 
 class JobItemCard extends StatelessWidget {
   const JobItemCard({
     Key? key,
+    required this.job,
     required this.onTap,
   }) : super(key: key);
 
+  final Job job;
   final VoidCallback onTap;
 
   @override
@@ -23,9 +26,9 @@ class JobItemCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Software Engineer',
-              style: TextStyle(
+            Text(
+              job.jobTitle!,
+              style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w700,
               ),
@@ -43,7 +46,7 @@ class JobItemCard extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    '10 - 100k EUR',
+                    '${job.minSalary} - ${job.maxSalary} EUR',
                     style: TextStyle(
                       fontSize: 16,
                       color: rareCrewColors.purple,
@@ -55,7 +58,7 @@ class JobItemCard extends StatelessWidget {
             ),
             const YBox(20),
             Text(
-              'Posted March 30, 2022',
+              job.createdAt!,
               style: TextStyle(
                 color: rareCrewColors.darkGrey,
               ),

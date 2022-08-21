@@ -68,7 +68,7 @@ final rareCrewTheme = ThemeData(
       ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
-      primary: rareCrewColors.background,
+      foregroundColor: rareCrewColors.background,
       minimumSize: const Size(double.infinity, 55),
       backgroundColor: rareCrewColors.purple,
       shape: const RoundedRectangleBorder(
@@ -79,7 +79,7 @@ final rareCrewTheme = ThemeData(
 );
 
 // app colors
-const rareCrewColors = _rareCrewColors(
+const rareCrewColors = _RareCrewColors(
   yellow: Color(0xFFF3E42B),
   purple: Color(0xFF7A74F6),
   red: Color(0xFFB22A29),
@@ -93,8 +93,8 @@ const rareCrewColors = _rareCrewColors(
 );
 
 // app colors model
-class _rareCrewColors {
-  const _rareCrewColors({
+class _RareCrewColors {
+  const _RareCrewColors({
     required this.yellow,
     required this.purple,
     required this.red,

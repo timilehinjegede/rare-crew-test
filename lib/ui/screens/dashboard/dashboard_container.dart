@@ -1,25 +1,19 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:rare_crew/ui/screens/add_job_screen.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rare_crew/ui/screens/dashboard/home_tab.dart';
 import 'package:rare_crew/ui/screens/dashboard/profile_tab.dart';
 import 'package:rare_crew/ui/widgets/widgets.dart';
-import 'package:rare_crew/utils/theme.dart';
 import 'package:rare_crew/utils/utils.dart';
+import 'package:rare_crew/viewmodels/job_viewmodels.dart';
 
-class DashboardContainer extends StatefulWidget {
+class DashboardContainer extends HookConsumerWidget {
   const DashboardContainer({Key? key}) : super(key: key);
 
   @override
-  State<DashboardContainer> createState() => _DashboardContainerState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    var currentIndex = useState(0);
 
-class _DashboardContainerState extends State<DashboardContainer> {
-  int _currentIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: rareCrewColors.grey,
       bottomNavigationBar: RareCrewBottomNav(
@@ -28,38 +22,36 @@ class _DashboardContainerState extends State<DashboardContainer> {
           BottomNavItem.profile,
         ],
         onItemSelected: (newIndex) {
-          log('newIndex: $newIndex');
-          setState(() {
-            _currentIndex = newIndex;
-          });
+          currentIndex.value = newIndex;
         },
-        currentIndex: _currentIndex,
+        currentIndex: currentIndex.value,
       ),
       appBar: AtsHomeCustomAppBar(
-        title: _currentIndex == 0 ? 'My Items' : 'My Profile',
-        titleValue: _currentIndex == 0 ? 10 : null,
+        title: currentIndex.value == 0 ? 'My Jobs' : 'My Profile',
+        titleValue: currentIndex.value == 0 ? ref.watch(jobsListProvider).length : null,
         onAvatarTapped: () {
-          if (_currentIndex != 1) {
-            setState(() {
-              _currentIndex = 1;
-            });
+          if (currentIndex.value != 1) {
+            currentIndex.value = 1;
           }
         },
       ),
       body: const [
         HomeTab(),
         ProfileTab(),
-      ].elementAt(_currentIndex),
-      floatingActionButton: _currentIndex == 0
+      ].elementAt(currentIndex.value),
+      floatingActionButton: currentIndex.value == 0
           ? FloatingActionButton.extended(
               onPressed: () {
-                pushTo(
-                  context,
-                  const AddJobScreen(),
+                showModalBottomSheet(
+                  context: context,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  builder: (_) => const JobFormWidget(),
                 );
               },
               icon: const Icon(Icons.add),
-              label: Text('Add a job'),
+              label: const Text('Add a job'),
             )
           : null,
     );
