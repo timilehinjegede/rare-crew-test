@@ -11,7 +11,7 @@ final jobRepositoryProvider = Provider<JobRepository>((ref) {
 const _jobsKey = 'jobs';
 
 abstract class JobRepository {
-  Future<List<Job>> getJobs();
+  List<Job> getJobs();
   Future<void> saveJobs(List<Job> jobs);
 }
 
@@ -21,7 +21,7 @@ class JobRepositoryImpl implements JobRepository {
   final Reader _read;
 
   @override
-  Future<List<Job>> getJobs() async {
+  List<Job> getJobs() {
     final prefs = _read(sharedPreferencesProvider);
 
     final List<String> jobStringList = prefs.getStringList(_jobsKey) ?? [];

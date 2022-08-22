@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rare_crew/utils/utils.dart';
 
-class AtsHomeCustomAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
-  const AtsHomeCustomAppBar({
+class HomeCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const HomeCustomAppBar({
     Key? key,
     required this.title,
     this.titleValue,
@@ -78,8 +77,8 @@ class AtsHomeCustomAppBar extends StatelessWidget
   Size get preferredSize => const Size.fromHeight(70);
 }
 
-class AtsCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const AtsCustomAppBar({
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppBar({
     Key? key,
     this.title,
     this.leading,

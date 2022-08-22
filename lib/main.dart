@@ -37,7 +37,7 @@ class MyApp extends ConsumerWidget {
       title: 'Rare Crew Task',
       debugShowCheckedModeBanner: false,
       theme: rareCrewTheme,
-      home: ref.read(authRepositoryProvider).getToken() != null
+      home: ref.read(authRepositoryProvider).getUser() != null
           ? const DashboardContainer()
           : const SignInScreen(),
     );

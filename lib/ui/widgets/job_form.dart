@@ -26,14 +26,14 @@ class JobFormWidget extends HookConsumerWidget {
       ),
       child: Column(
         children: [
-          AtsCustomAppBar(
+          CustomAppBar(
             title: jobFormViewModel.isNewJob
                 ? 'Create job offer'
                 : 'Edit job offer',
             onLeadingTapped: () => pop(context),
             actions: [
               if (!jobFormViewModel.isNewJob)
-                AtsTextButton(
+                CustomTextButton(
                   title: 'Update',
                   size: const Size(70, 40),
                   buttonColor: rareCrewColors.purple,
@@ -48,7 +48,7 @@ class JobFormWidget extends HookConsumerWidget {
             background: rareCrewColors.background,
           ),
           const YBox(20),
-          AtsTextField(
+          CustomTextField(
             initialValue: jobFormViewModel.jobTitle,
             labelText: 'Job title',
             hintText: 'Ex: Software engineer',
@@ -63,7 +63,7 @@ class JobFormWidget extends HookConsumerWidget {
           Row(
             children: [
               Expanded(
-                child: AtsTextField(
+                child: CustomTextField(
                   initialValue: (jobFormViewModel.minSalary == 0
                           ? ''
                           : jobFormViewModel.minSalary)
@@ -83,7 +83,7 @@ class JobFormWidget extends HookConsumerWidget {
               ),
               const XBox(15),
               Expanded(
-                child: AtsTextField(
+                child: CustomTextField(
                   initialValue: (jobFormViewModel.maxSalary == 0
                           ? ''
                           : jobFormViewModel.maxSalary)
@@ -105,7 +105,7 @@ class JobFormWidget extends HookConsumerWidget {
           ),
           const YBox(50),
           if (jobFormViewModel.isNewJob)
-            AtsTextButton(
+            CustomTextButton(
               title: 'Create job offer',
               onPressed: () async {
                 jobFormViewModel.jobId = const Uuid().v4();
@@ -114,7 +114,7 @@ class JobFormWidget extends HookConsumerWidget {
               },
             )
           else
-            AtsTextButton(
+            CustomTextButton(
               title: '',
               titleWidget: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -175,7 +175,7 @@ class JobFormWidget extends HookConsumerWidget {
                             textAlign: TextAlign.center,
                           ),
                           const YBox(25),
-                          AtsTextButton(
+                          CustomTextButton(
                             title: 'Yes, delete',
                             buttonColor: rareCrewColors.lightRed,
                             textColor: rareCrewColors.red,
@@ -187,7 +187,7 @@ class JobFormWidget extends HookConsumerWidget {
                             },
                           ),
                           const YBox(15),
-                          AtsTextButton(
+                          CustomTextButton(
                             title: 'No, cancel',
                             buttonColor: rareCrewColors.background,
                             textColor: rareCrewColors.black,

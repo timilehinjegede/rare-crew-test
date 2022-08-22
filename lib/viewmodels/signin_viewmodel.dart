@@ -2,22 +2,19 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rare_crew/core/core.dart';
 
 final signInViewModelProvider =
-    StateNotifierProvider.autoDispose<SignInViewModel, AsyncValue<void>>((ref) {
+    StateNotifierProvider.autoDispose<SignInViewModel, void>((ref) {
   return SignInViewModel(ref.read);
 });
 
-class SignInViewModel extends StateNotifier<AsyncValue<void>> {
-  SignInViewModel(this._read) : super(const AsyncData(null));
+class SignInViewModel extends StateNotifier<void> {
+  SignInViewModel(this._read) : super(null);
 
   final Reader _read;
 
-  Future<void> signIn() async {
-    state = const AsyncLoading();
-    final result = await _read(authRepositoryProvider).signIn(
+  void signIn() async {
+    _read(authRepositoryProvider).signIn(
       email: 'email',
       password: 'password',
     );
-
-    state = AsyncValue.data(result);
   }
 }

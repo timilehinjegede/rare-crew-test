@@ -26,9 +26,10 @@ class DashboardContainer extends HookConsumerWidget {
         },
         currentIndex: currentIndex.value,
       ),
-      appBar: AtsHomeCustomAppBar(
+      appBar: HomeCustomAppBar(
         title: currentIndex.value == 0 ? 'My Jobs' : 'My Profile',
-        titleValue: currentIndex.value == 0 ? ref.watch(jobsListProvider).length : null,
+        titleValue:
+            currentIndex.value == 0 ? ref.watch(jobsListProvider).length : null,
         onAvatarTapped: () {
           if (currentIndex.value != 1) {
             currentIndex.value = 1;

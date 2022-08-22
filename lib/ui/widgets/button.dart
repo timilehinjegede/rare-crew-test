@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rare_crew/utils/utils.dart';
 
-class AtsTextButton extends StatelessWidget {
-  const AtsTextButton({
+class CustomTextButton extends StatelessWidget {
+  const CustomTextButton({
     Key? key,
     required this.title,
     this.titleWidget,
@@ -62,8 +62,8 @@ class AtsTextButton extends StatelessWidget {
   }
 }
 
-class AtsOutlinedButton extends StatelessWidget {
-  const AtsOutlinedButton({
+class CustomOutlinedButton extends StatelessWidget {
+  const CustomOutlinedButton({
     Key? key,
     required this.title,
     required this.onPressed,

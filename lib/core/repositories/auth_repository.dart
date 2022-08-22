@@ -1,6 +1,5 @@
-import 'dart:developer';
+import 'dart:convert';
 
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rare_crew/core/core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,12 +13,11 @@ final authRepositoryProvider = Provider.autoDispose<AuthRepository>((ref) {
 });
 
 abstract class AuthRepository {
-  Future<void> signIn({required String email, required String password});
-  Future<User?> getUser();
-  Future<void> saveToken(String token);
-  String? getToken();
-  Future<void> removeToken();
-  // Future<void> refreshToken();
+  void signIn({required String email, required String password});
+
+  Future<void> saveUser(User user);
+  User? getUser();
+  Future<void> removeUser();
 }
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -32,60 +30,65 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
     required String password,
   }) async {
-    // Create a json web token
-    final jwt = JWT(
-      {
-        'id': 123,
-        'server': {
-          'id': '3e4fc296',
-          'loc': 'euw-2',
-          // user details
-          'email': email,
-          // add dummy extra details
-          'first_name': 'John',
-          'last_name': 'Doe',
-          'phone': '+44 1234567890',
-        }
-      },
-      issuer: 'https://github.com/jonasroussel/dart_jsonwebtoken',
+    // create a user object with the email provided on sign in
+    var user = User(
+      email: email,
+      firstName: 'John',
+      lastName: 'Doe',
+      phone: '+44 1234567890',
     );
 
-    // Sign it (default with HS256 algorithm)
-    final token = jwt.sign(SecretKey('passphrase'));
-    await saveToken(token);
+    final token = _read(jwtRepositoryProvider).generateJwt(user);
 
-    log('Signed token: $token\n');
+    _read(sharedPreferencesProvider).setString(
+      'user',
+      jsonEncode(user.copyWith(token: token)),
+    );
   }
 
   @override
-  Future<User?> getUser() async {
-    try {
-      // Verify a token
-      final jwt = JWT.verify(getToken()!, SecretKey('passphrase'));
+  User? getUser() {
+    // verify the token
+    final userString = _read(sharedPreferencesProvider).getString('user');
 
-      log('Payload: ${jwt.payload}');
+    if (userString != null) {
+      final user = User.fromJson(
+        jsonDecode(userString),
+      );
 
-      return User.fromJson(jwt.payload['server']);
-    } on JWTExpiredError {
-      log('jwt expired');
-    } on JWTError catch (ex) {
-      log(ex.message); // ex: invalid signature
+      final userMap = _read(jwtRepositoryProvider).verifyJwt(user.token!);
+
+      if (userMap != null) {
+        final verifiedUser = User.fromJson(userMap['server']);
+
+        return verifiedUser;
+      } else {
+        final localUserMap = jsonDecode(
+          _read(sharedPreferencesProvider).getString('user')!,
+        );
+
+        final localUser = User.fromJson(localUserMap..remove('token'));
+
+        final token = _read(jwtRepositoryProvider).generateJwt(localUser);
+
+        saveUser(localUser.copyWith(token: token));
+
+        return getUser();
+      }
     }
     return null;
   }
 
   @override
-  String? getToken() {
-    return _read(sharedPreferencesProvider).getString('token');
+  Future<void> saveUser(User user) async {
+    _read(sharedPreferencesProvider).setString(
+      'user',
+      jsonEncode(user.toJson()),
+    );
   }
 
   @override
-  Future<void> saveToken(String token) async {
-    _read(sharedPreferencesProvider).setString('token', token);
-  }
-
-  @override
-  Future<void> removeToken() async {
-    _read(sharedPreferencesProvider).remove('token');
+  Future<void> removeUser() async {
+    _read(sharedPreferencesProvider).remove('user');
   }
 }

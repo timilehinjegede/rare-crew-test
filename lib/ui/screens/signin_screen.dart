@@ -35,14 +35,14 @@ class SignInScreen extends HookConsumerWidget {
                 ),
               ),
               const YBox(40),
-              AtsTextField(
+              CustomTextField(
                 labelText: 'Email address',
                 hintText: 'hello@example.com',
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (val) {},
               ),
               const YBox(20),
-              AtsTextField(
+              CustomTextField(
                 labelText: 'Password',
                 hintText: 'Your password',
                 keyboardType: TextInputType.visiblePassword,
@@ -50,13 +50,12 @@ class SignInScreen extends HookConsumerWidget {
                 onChanged: (val) {},
               ),
               const YBox(30),
-              AtsTextButton(
+              CustomTextButton(
                 title: 'Sign in',
                 onPressed: () async {
                   ref.watch(signInViewModelProvider.notifier).signIn();
                   pushTo(context, const DashboardContainer());
                 },
-                buttonColor: rareCrewColors.yellow,
               ),
             ],
           ),

@@ -20,7 +20,7 @@ class JobsViewModel extends StateNotifier<List<Job>> {
   final Reader _read;
 
   void getJobs() async {
-    final jobs = await _read(jobRepositoryProvider).getJobs();
+    final jobs = _read(jobRepositoryProvider).getJobs();
 
     state = jobs;
   }

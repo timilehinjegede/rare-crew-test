@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rare_crew/utils/utils.dart';
 
-class AtsTextField extends StatefulWidget {
-  const AtsTextField({
+class CustomTextField extends StatefulWidget {
+  const CustomTextField({
     Key? key,
     required this.hintText,
     required this.labelText,
@@ -35,10 +35,10 @@ class AtsTextField extends StatefulWidget {
   final String? initialValue;
 
   @override
-  State<AtsTextField> createState() => _AtsTextFieldState();
+  State<CustomTextField> createState() => _CustomTextFieldState();
 }
 
-class _AtsTextFieldState extends State<AtsTextField> {
+class _CustomTextFieldState extends State<CustomTextField> {
   bool _isPasswordVisible = false;
 
   void updatePasswordVisibility() {
