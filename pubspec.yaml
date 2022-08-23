@@ -35,6 +35,22 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
+  # state management
+  flutter_hooks: ^0.18.5+1
+  hooks_riverpod: ^1.0.4
+
+  # persisiting data locally
+  shared_preferences: ^2.0.15
+
+  # generating and verifying jwts
+  dart_jsonwebtoken: ^2.4.2
+
+  #generating uuids
+  uuid: ^3.0.6
+
+  # date and time format
+  intl: ^0.17.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
