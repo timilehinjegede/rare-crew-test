@@ -5,6 +5,7 @@ class User {
     this.lastName,
     this.phone,
     this.token,
+    this.password,
   });
 
   final String? email;
@@ -12,6 +13,7 @@ class User {
   final String? lastName;
   final String? phone;
   final String? token;
+  final String? password;
 
   User copyWith({
     String? email,
@@ -19,6 +21,7 @@ class User {
     String? lastName,
     String? phone,
     String? token,
+    String? password,
   }) {
     return User(
       email: email ?? this.email,
@@ -26,6 +29,7 @@ class User {
       lastName: lastName ?? this.lastName,
       phone: phone ?? this.phone,
       token: token ?? this.token,
+      password: password ?? this.password,
     );
   }
 
@@ -36,6 +40,7 @@ class User {
       lastName: json['last_name'],
       phone: json['phone'],
       token: json['token'],
+      password: json['password'],
     );
   }
 
@@ -49,6 +54,7 @@ class User {
         'first_name': firstName,
         'last_name': lastName,
         'phone': phone,
+        'password': password,
         if (token != null) 'token': token,
       };
 }

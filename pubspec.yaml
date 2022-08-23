@@ -48,6 +48,9 @@ dependencies:
   #generating uuids
   uuid: ^3.0.6
 
+  # date and time format
+  intl: ^0.17.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

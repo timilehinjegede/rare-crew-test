@@ -13,7 +13,12 @@ class HomeTab extends HookConsumerWidget {
 
     return jobsList.isEmpty
         ? const Center(
-            child: Text('Click + to add a job'),
+            child: Text(
+              'Click + to add a job',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
           )
         : ListView.separated(
             padding: const EdgeInsets.symmetric(

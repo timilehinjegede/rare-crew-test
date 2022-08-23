@@ -11,10 +11,13 @@ class SignInViewModel extends StateNotifier<void> {
 
   final Reader _read;
 
-  void signIn() async {
+  void signIn({
+    required String email,
+    required String password,
+  }) async {
     _read(authRepositoryProvider).signIn(
-      email: 'email',
-      password: 'password',
+      email: email,
+      password: password,
     );
   }
 }

@@ -9,14 +9,10 @@ final jwtRepositoryProvider = Provider<JwtRepository>((ref) {
 
 abstract class JwtRepository {
   String generateJwt(User user);
-  Map<String, dynamic>? verifyJwt(String token);
+  Map<String, dynamic>? verifyJwt(User user);
 }
 
 class JwtRepositoryImpl implements JwtRepository {
-  // JwtRepositoryImpl(this._read);
-
-  // final Reader _read;
-
   @override
   String generateJwt(User user) {
     // create a json web token
@@ -35,7 +31,8 @@ class JwtRepositoryImpl implements JwtRepository {
 
     // sign it (default with HS256 algorithm)
     final token = jwt.sign(
-      SecretKey('passphrase'),
+      // use the user password as a passphrase
+      SecretKey(user.password!),
       expiresIn: const Duration(seconds: 10),
     );
 
@@ -43,11 +40,11 @@ class JwtRepositoryImpl implements JwtRepository {
   }
 
   @override
-  Map<String, dynamic>? verifyJwt(String token) {
+  Map<String, dynamic>? verifyJwt(User user) {
     try {
       final jwt = JWT.verify(
-        token,
-        SecretKey('passphrase'),
+        user.token!,
+        SecretKey(user.password!),
       );
 
       return jwt.payload;

@@ -13,7 +13,7 @@ final authRepositoryProvider = Provider.autoDispose<AuthRepository>((ref) {
 });
 
 abstract class AuthRepository {
-  void signIn({required String email, required String password});
+  Future<void> signIn({required String email, required String password});
 
   Future<void> saveUser(User user);
   User? getUser();
@@ -33,6 +33,7 @@ class AuthRepositoryImpl implements AuthRepository {
     // create a user object with the email provided on sign in
     var user = User(
       email: email,
+      password: password,
       firstName: 'John',
       lastName: 'Doe',
       phone: '+44 1234567890',
@@ -56,7 +57,7 @@ class AuthRepositoryImpl implements AuthRepository {
         jsonDecode(userString),
       );
 
-      final userMap = _read(jwtRepositoryProvider).verifyJwt(user.token!);
+      final userMap = _read(jwtRepositoryProvider).verifyJwt(user);
 
       if (userMap != null) {
         final verifiedUser = User.fromJson(userMap['server']);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rare_crew/ui/screens/dashboard/dashboard_container.dart';
 import 'package:rare_crew/ui/widgets/widgets.dart';
@@ -10,6 +11,9 @@ class SignInScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var email = useState('');
+    var password = useState('');
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -37,9 +41,13 @@ class SignInScreen extends HookConsumerWidget {
               const YBox(40),
               CustomTextField(
                 labelText: 'Email address',
-                hintText: 'hello@example.com',
+                hintText: 'jobs@rarecrew.com',
                 keyboardType: TextInputType.emailAddress,
-                onChanged: (val) {},
+                onChanged: (val) {
+                  if (val.isNotEmpty) {
+                    email.value = val;
+                  }
+                },
               ),
               const YBox(20),
               CustomTextField(
@@ -47,15 +55,24 @@ class SignInScreen extends HookConsumerWidget {
                 hintText: 'Your password',
                 keyboardType: TextInputType.visiblePassword,
                 isPassword: true,
-                onChanged: (val) {},
+                onChanged: (val) {
+                  if (val.isNotEmpty) {
+                    password.value = val;
+                  }
+                },
               ),
               const YBox(30),
               CustomTextButton(
                 title: 'Sign in',
                 onPressed: () async {
-                  ref.watch(signInViewModelProvider.notifier).signIn();
+                  ref.watch(signInViewModelProvider.notifier).signIn(
+                        email: email.value,
+                        password: password.value,
+                      );
                   pushTo(context, const DashboardContainer());
                 },
+                disabled: !(isEmailAddressValid(email.value) &&
+                    isInputValid(password.value)),
               ),
             ],
           ),

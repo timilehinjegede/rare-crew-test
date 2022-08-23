@@ -46,7 +46,7 @@ class JobItemCard extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    '${job.minSalary} - ${job.maxSalary} EUR',
+                    '${formatCurrency(job.minSalary!.toDouble())} - ${formatCurrency(job.maxSalary!.toDouble())} USD',
                     style: TextStyle(
                       fontSize: 16,
                       color: rareCrewColors.purple,
@@ -58,7 +58,7 @@ class JobItemCard extends StatelessWidget {
             ),
             const YBox(20),
             Text(
-              job.createdAt!,
+              formatDate(DateTime.parse(job.createdAt!)),
               style: TextStyle(
                 color: rareCrewColors.darkGrey,
               ),
