@@ -6,12 +6,6 @@ import 'package:rare_crew/ui/screens/signin_screen.dart';
 import 'package:rare_crew/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// final sharedPreferencesProvider = FutureProvider<SharedPreferences>(
-//   (ref) async {
-//     return SharedPreferences.getInstance();
-//   },
-// );
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final SharedPreferences sharedPreferences =
